@@ -42,8 +42,8 @@ module.exports = {
 };
 
 const handlePixtralResponse = async (senderId, input, pageAccessToken) => {
-  const apiKey = "GET YOUR API > https://kaiz-apis.gleeze.com";
-  const url = `https://kaiz-apis.gleeze.com/api/pixtral-12b?q=${encodeURIComponent(input)}&uid=${senderId}&apikey=${apiKey}`;
+  const apiKey = "GET YOUR API >https://mybot-rest.kozow.com";
+  const url = `https://mybot-rest.kozow.com/api/ai4chat?ask=${encodeURIComponent(input)}&uid=${senderId}&apikey=${apiKey}`;
 
   try {
     const { data } = await axios.get(url);
