@@ -1,8 +1,5 @@
 const axios = require("axios");
 const { sendMessage } = require("../handles/sendMessage");
-const fs = require("fs");
-
-const token = fs.readFileSync("token.txt", "utf8");
 
 const fontMapping = {
   'A': '𝗔', 'B': '𝗕', 'C': '𝗖', 'D': '𝗗', 'E': '𝗘', 'F': '𝗙', 'G': '𝗚',
@@ -37,43 +34,48 @@ module.exports = {
       }, pageAccessToken);
     }
 
-    await handlePixtralResponse(senderId, prompt, pageAccessToken);
+    await handleAIResponse(senderId, prompt, pageAccessToken);
   }
 };
 
-const handlePixtralResponse = async (senderId, input, pageAccessToken) => {
-  const apiKey = "GET YOUR API > https://kaiz-apis.gleeze.com";
-  const url = `https://kaiz-apis.gleeze.com/api/pixtral-12b?q=${encodeURIComponent(input)}&uid=${senderId}&apikey=${apiKey}`;
+const handleAIResponse = async (senderId, input, pageAccessToken) => {
+  const url = `https://mybot-rest.kozow.com/api/ai4chat?ask=${encodeURIComponent(input)}`;
 
   try {
     const { data } = await axios.get(url);
-    const responseText = data.content || "❌ No response from Pixtral AI.";
+    
+    if (!data || typeof data !== 'string') {
+      throw new Error('Invalid response from AI API');
+    }
+
+    const responseText = data.trim();
+    
+    if (!responseText) {
+      throw new Error('Empty response from AI');
+    }
 
     const decoratedResponse = `𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧\n─────────────\n${responseText}\n─────────────`;
     const formatted = convertToBold(decoratedResponse);
 
     await sendConcatenatedMessage(senderId, formatted, pageAccessToken);
   } catch (error) {
-    console.error("Pixtral API error:", error.message);
+    console.error("AI API error:", error.message);
     return sendMessage(senderId, {
-      text: "❌ 𝗘𝗿𝗿𝗼𝗿: 𝗨𝗻𝗮𝗯𝗹𝗲 𝘁𝗼 𝗴𝗲𝘁 𝗮 𝗿𝗲𝘀𝗽𝗼𝗻𝘀𝗲."
+      text: "❌ 𝗘𝗿𝗿𝗼𝗿: 𝗨𝗻𝗮𝗯𝗹𝗲 𝘁𝗼 𝗴𝗲𝘁 𝗮 𝗿𝗲𝘀𝗽𝗼𝗻𝘀𝗲 𝗳𝗿𝗼𝗺 𝗔𝗜 𝘀𝗲𝗿𝘃𝗶𝗰𝗲."
     }, pageAccessToken);
   }
 };
 
 const sendConcatenatedMessage = async (senderId, text, pageAccessToken) => {
   const maxLength = 2000;
-  const chunks = splitMessageIntoChunks(text, maxLength);
-  for (const msg of chunks) {
-    await sendMessage(senderId, { text: msg }, pageAccessToken);
+  const chunks = [];
+  
+  for (let i = 0; i < text.length; i += maxLength) {
+    chunks.push(text.slice(i, i + maxLength));
+  }
+  
+  for (const chunk of chunks) {
+    await sendMessage(senderId, { text: chunk }, pageAccessToken);
     await new Promise(resolve => setTimeout(resolve, 500));
   }
 };
-
-const splitMessageIntoChunks = (message, chunkSize) => {
-  const chunks = [];
-  for (let i = 0; i < message.length; i += chunkSize) {
-    chunks.push(message.slice(i, i + chunkSize));
-  }
-  return chunks;
-}; 
