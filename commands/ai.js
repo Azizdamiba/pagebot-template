@@ -39,7 +39,7 @@ module.exports = {
 };
 
 const handleAIResponse = async (senderId, input, pageAccessToken) => {
-  const url = `https://fuku-api-v4-2-p6ik.onrender.com/ask?prompt=${encodeURIComponent(input)}`;
+  const url = `https://mybot-rest.kozow.com/api/ai4chat?ask=${encodeURIComponent(input)}`;
 
   try {
     const { data } = await axios.get(url);
@@ -54,7 +54,7 @@ const handleAIResponse = async (senderId, input, pageAccessToken) => {
       throw new Error('Empty response from AI');
     }
 
-    const decoratedResponse = `𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 DANAKRO\n─────────────\n${responseText}\n─────────────`;
+    const decoratedResponse = `𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧\n─────────────\n${responseText}\n─────────────`;
     const formatted = convertToBold(decoratedResponse);
 
     await sendConcatenatedMessage(senderId, formatted, pageAccessToken);
