@@ -44,11 +44,11 @@ const handleAIResponse = async (senderId, input, pageAccessToken) => {
   try {
     const { data } = await axios.get(url);
     
-    if (!data || typeof data !== 'string') {
+    if (!data || !data.result) {
       throw new Error('Invalid response from AI API');
     }
 
-    const responseText = data.trim();
+    const responseText = data.result.trim();
     
     if (!responseText) {
       throw new Error('Empty response from AI');
