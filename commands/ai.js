@@ -54,7 +54,7 @@ const handleAIResponse = async (senderId, input, pageAccessToken) => {
       throw new Error('Empty response from AI');
     }
 
-    const decoratedResponse = `𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧\n─────────────\n${responseText}\n─────────────`;
+    const decoratedResponse = `𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧 DANAKRO\n─────────────\n${responseText}\n─────────────`;
     const formatted = convertToBold(decoratedResponse);
 
     await sendConcatenatedMessage(senderId, formatted, pageAccessToken);
