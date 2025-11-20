@@ -1,4 +1,5 @@
-const message = require('../handles/handleMessage'); // Si le fichier s'appelle handleMessage.js
+const { sendMessage } = require('../handles/handleMessage'); // Adjust the path as needed
+
 module.exports = {
   name: 'id',
   description: 'Show sender ID',
