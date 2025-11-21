@@ -119,7 +119,7 @@ module.exports = {
       );
 
       const { pageid } = await getPageData(pageAccessToken);
-      const notificationMessage = `📢 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡 \n━━━━━━━━━━━━━━\n╭💬 𝗠𝗘𝗦𝗦𝗔𝗚𝗘: \n╰┈➤ ${message}\n━━━━━━━━━━━━━━`;
+      const notificationMessage = `📢 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡 𝐃𝐄 𝐃𝐀𝐌𝐈𝐁𝐀\n━━━━━━━━━━━━━━\n╭💬 𝗠𝗘𝗦𝗦𝗔𝗚𝗘: \n╰┈➤ ${message}\n━━━━━━━━━━━━━━`;
 
       await sendNotificationToAllUsers(notificationMessage, pageAccessToken, pageid);
 
