@@ -1,3 +1,10 @@
 {
-  "adminId":"27644942268487478"
+  "adminId": ["27644942268487478"],
+  "sessions": [
+    {
+      "adminid": "27644942268487478",
+      "pageid": "VOTRE_PAGE_ID",
+      "pageAccessToken": "VOTRE_ACCESS_TOKEN"
+    }
+  ]
 }
