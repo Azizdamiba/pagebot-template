@@ -1,19 +1,19 @@
-const { sendMessage } = require('../handles/handleMessage'); // Adjust the path as needed
+const { sendMessage } = require('../handles/sendMessage');
+const fs = require('fs');
+
+const pageAccessToken = fs.readFileSync('token.txt', 'utf8');
 
 module.exports = {
   name: 'id',
-  description: 'Show sender ID',
-  author: 'System',
-  role: 1,
-  async execute(senderId, args, pageAccessToken) {
- 
-    const response = `senderId: ${senderId}`;
-    
+  description: 'get ur actual id',
+  author: 'coffee',
 
+  async execute(senderId) {
     try {
-      await sendMessage(senderId, { text: response }, pageAccessToken);
+      await sendMessage(senderId, { text: `${senderId}` }, pageAccessToken);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error sending UID:', error);
+      await sendMessage(senderId, { text: 'Error: Unable to retrieve your UID.' }, pageAccessToken);
     }
-  }
+  },
 };
