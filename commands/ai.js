@@ -39,7 +39,7 @@ module.exports = {
 };
 
 const handleAIResponse = async (senderId, input, pageAccessToken) => {
-  const url = `https://mybot-rest.kozow.com/api/ai4chat?ask=${encodeURIComponent(input)}`;
+  const url = `https://fuku-api-v4-2-p6ik.onrender.com/ask?prompt=${encodeURIComponent(input)}`;
 
   try {
     const { data } = await axios.get(url);
